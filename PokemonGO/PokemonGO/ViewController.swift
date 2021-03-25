@@ -26,20 +26,13 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let locationLast = locations.last {
-            applyZoomRegion(latitude: locationLast.coordinate.latitude, longitude: locationLast.coordinate.longitude)
+            applyZoomRegion(coordinate: locationLast.coordinate)
+            locationManager.stopUpdatingLocation()
         }
     }
     
-    private func applyZoomRegion(latitude: CLLocationDegrees,
-                                 longitude: CLLocationDegrees) {
-        
-        let deltaLatitude: CLLocationDegrees = 0.01
-        let deltaLongitude: CLLocationDegrees = 0.01
-        
-        let location = CLLocationCoordinate2DMake(latitude, longitude)
-        let areaVisualization = MKCoordinateSpan(latitudeDelta: deltaLatitude, longitudeDelta: deltaLongitude)
-        
-        let region =  MKCoordinateRegion(center: location, span: areaVisualization)
+    private func applyZoomRegion(coordinate: CLLocationCoordinate2D) {
+        let region = MKCoordinateRegion.init(center: coordinate, latitudinalMeters: 200, longitudinalMeters: 200)
         mapView.setRegion(region, animated: true)
     }
     
