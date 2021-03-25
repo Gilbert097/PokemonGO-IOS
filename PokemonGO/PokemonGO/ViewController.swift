@@ -44,23 +44,13 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        let status = manager.authorizationStatus
+        print("Status: \(status.rawValue)")
         
-        let status =  manager.authorizationStatus
-        switch status {
-        case .notDetermined:
-            print("Status: notDetermined")
-        case .restricted:
-            print("Status: restricted")
-        case .denied:
-            print("Status: denied")
-            showAlertRequestPermissionLocation()
-        case .authorizedAlways:
-            print("Status: authorizedAlways")
-        case .authorizedWhenInUse:
-            print("Status: authorizedWhenInUse")
+        if status == .authorizedWhenInUse {
             locationManager.startUpdatingLocation()
-        @unknown default:
-            print("Status: nil")
+        } else if status == .denied {
+            showAlertRequestPermissionLocation()
         }
     }
     
