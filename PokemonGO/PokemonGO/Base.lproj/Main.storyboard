@@ -19,6 +19,28 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ewd-2e-aDT">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1CE-rw-JpU">
+                                <rect key="frame" x="354" y="10" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="wtf-Qt-cng"/>
+                                    <constraint firstAttribute="height" constant="50" id="zfF-Ih-qYC"/>
+                                </constraints>
+                                <state key="normal" image="compass"/>
+                                <connections>
+                                    <action selector="compassButtonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fMr-qx-6ws"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fow-DF-sDx">
+                                <rect key="frame" x="182" y="676" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="519-f3-PM8"/>
+                                    <constraint firstAttribute="height" constant="50" id="GQI-8q-Id6"/>
+                                </constraints>
+                                <state key="normal" image="pokeball"/>
+                                <connections>
+                                    <action selector="pokeballButtonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WPG-ST-2pP"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -26,7 +48,11 @@
                             <constraint firstItem="Ewd-2e-aDT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6cB-ki-bcJ"/>
                             <constraint firstItem="Ewd-2e-aDT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Wpx-hg-HhP"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Ewd-2e-aDT" secondAttribute="bottom" id="ZHb-ua-IG3"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="fow-DF-sDx" secondAttribute="bottom" constant="10" id="gon-lq-3I4"/>
+                            <constraint firstItem="1CE-rw-JpU" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="nB8-tv-tZI"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ewd-2e-aDT" secondAttribute="trailing" id="nJk-sj-9vK"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1CE-rw-JpU" secondAttribute="trailing" constant="10" id="rGS-aE-1J4"/>
+                            <constraint firstItem="fow-DF-sDx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yo0-xn-WNo"/>
                         </constraints>
                     </view>
                     <connections>
@@ -39,6 +65,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="compass" width="40" height="40"/>
+        <image name="pokeball" width="40" height="40"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

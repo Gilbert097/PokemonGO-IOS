@@ -25,9 +25,13 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let locationLast = locations.last {
-            applyZoomRegion(coordinate: locationLast.coordinate)
-            locationManager.stopUpdatingLocation()
+        centralizeUserMap()
+        locationManager.stopUpdatingLocation()
+    }
+    
+    private func centralizeUserMap() {
+        if let location = locationManager.location {
+            applyZoomRegion(coordinate: location.coordinate)
         }
     }
     
@@ -73,5 +77,11 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         alertController.addAction(cancelAction)
     }
 
+    @IBAction func compassButtonClick(_ sender: UIButton) {
+        centralizeUserMap()
+    }
+    
+    @IBAction func pokeballButtonClick(_ sender: UIButton) {
+    }
 }
 
