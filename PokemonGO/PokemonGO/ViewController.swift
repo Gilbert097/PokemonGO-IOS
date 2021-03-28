@@ -14,6 +14,22 @@ class ViewController: MapLocationViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        generateRandomPokemons()
+    }
+    
+    private func generateRandomPokemons() {
+       Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { (timer) in
+            guard let location = self.locationManager.location else { return }
+            let annotation = MKPointAnnotation()
+            annotation.coordinate =  location.coordinate
+            annotation.coordinate.latitude += self.generateRandomNumber()
+            annotation.coordinate.longitude += self.generateRandomNumber()
+            self.mapView.addAnnotation(annotation)
+        }
+    }
+    
+    private func generateRandomNumber() -> Double {
+        (Double(arc4random_uniform(500)) - 250) / 10000.0
     }
     
     func locationManager(
