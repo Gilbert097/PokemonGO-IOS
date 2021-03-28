@@ -14,22 +14,42 @@ class ViewController: MapLocationViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.delegate = self
+        mapView.showAnnotations(mapView.annotations, animated: true)
         generateRandomPokemons()
     }
     
     private func generateRandomPokemons() {
        Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { (timer) in
-            guard let location = self.locationManager.location else { return }
+            guard let coordinate = self.locationManager.location?.coordinate else { return }
             let annotation = MKPointAnnotation()
-            annotation.coordinate =  location.coordinate
-            annotation.coordinate.latitude += self.generateRandomNumber()
+            annotation.coordinate = coordinate
+        annotation.coordinate.latitude += self.generateRandomNumber()
             annotation.coordinate.longitude += self.generateRandomNumber()
             self.mapView.addAnnotation(annotation)
         }
     }
     
     private func generateRandomNumber() -> Double {
-        (Double(arc4random_uniform(500)) - 250) / 10000.0
+        (Double(arc4random_uniform(100)) - 50) / 10000.0
+    }
+    
+    func mapView(
+        _ mapView: MKMapView,
+        viewFor annotation: MKAnnotation
+    ) -> MKAnnotationView? {
+       
+        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: nil)
+        var frame = annotationView.frame
+        frame.size.height = 40
+        frame.size.width = 40
+        if annotation is MKUserLocation {
+            annotationView.image = UIImage(named: "player")
+        } else {
+            annotationView.image = UIImage(named: "pikachu-2")
+        }
+        annotationView.frame = frame
+        return annotationView
     }
     
     func locationManager(
