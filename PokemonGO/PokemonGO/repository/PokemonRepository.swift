@@ -50,6 +50,33 @@ public class PokemonRepository {
         }
         return false
     }
+    
+    public func getAll() -> [Pokemon] {
+        do {
+            let pokemonEntitys = try self.viewContext.fetch (PokemonEntity.fetchRequest()) as? [PokemonEntity]
+            
+            guard
+                let entitys = pokemonEntitys,
+                entitys.count > 0
+            else {
+                self.populateDatabase()
+                return self.getAll()
+            }
+            
+            return entitys.map{
+                Pokemon(
+                    id: $0.id,
+                    name: $0.name ?? "",
+                    imageName: $0.image_name ?? "",
+                    captured: $0.captured
+                )
+            }
+        }catch {
+            print("Error: \(error.localizedDescription)")
+        }
+        return []
+    }
+    
     public func populateDatabase() {
         
         var pokemons:[Pokemon] = []

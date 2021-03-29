@@ -12,6 +12,7 @@ class ViewController: MapLocationViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     private var pokemonRepository: PokemonRepository?
+    private var pokemons: [Pokemon] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,26 +24,44 @@ class ViewController: MapLocationViewController {
         mapView.showAnnotations(mapView.annotations, animated: true)
         generateRandomPokemons()
         initPokemonRepository()
+        findPokemons()
+    }
+    
+    private func findPokemons() {
+        if let repository = pokemonRepository {
+            pokemons = repository.getAll()
+        }
     }
     
     private func initPokemonRepository() {
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             let context = appDelegate.persistentContainer.viewContext
             pokemonRepository = PokemonRepository(viewContext: context)
-            //guard let teste = pokemonRepository else { return }
-            //teste.populateDatabase()
         }
     }
     
     private func generateRandomPokemons() {
-       Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { (timer) in
-            guard let coordinate = self.locationManager.location?.coordinate else { return }
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinate
-        annotation.coordinate.latitude += self.generateRandomNumber()
-            annotation.coordinate.longitude += self.generateRandomNumber()
-            self.mapView.addAnnotation(annotation)
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { (timer) in
+            guard
+                let coordinate = self.locationManager.location?.coordinate
+            else { return }
+            let pokemon = self.getRandomPokemon()
+            self.addPokemonPointAnnotation(pokemon, coordinate)
         }
+    }
+    
+    private func getRandomPokemon() -> Pokemon {
+        let countPokemons = UInt32(self.pokemons.count)
+        let indexPokemon = Int(arc4random_uniform(countPokemons))
+        return self.pokemons[indexPokemon]
+    }
+    
+    private func addPokemonPointAnnotation(_ pokemon: Pokemon, _ coordinate: CLLocationCoordinate2D) {
+        let annotation = PokemonPointAnnotation(pokemon: pokemon)
+        annotation.coordinate = coordinate
+        annotation.coordinate.latitude += self.generateRandomNumber()
+        annotation.coordinate.longitude += self.generateRandomNumber()
+        self.mapView.addAnnotation(annotation)
     }
     
     private func generateRandomNumber() -> Double {
@@ -60,8 +79,13 @@ class ViewController: MapLocationViewController {
         frame.size.width = 40
         if annotation is MKUserLocation {
             annotationView.image = UIImage(named: "player")
-        } else {
-            annotationView.image = UIImage(named: "pikachu-2")
+        } else if annotation is PokemonPointAnnotation{
+            guard
+                let pokemonAnnotion = annotation as? PokemonPointAnnotation
+            else {
+                return annotationView
+            }
+            annotationView.image = UIImage(named: pokemonAnnotion.pokemon.imageName)
         }
         annotationView.frame = frame
         return annotationView
