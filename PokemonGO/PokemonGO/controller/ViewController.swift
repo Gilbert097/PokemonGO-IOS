@@ -11,12 +11,27 @@ import MapKit
 class ViewController: MapLocationViewController {
     
     @IBOutlet weak var mapView: MKMapView!
+    private var pokemonRepository: PokemonRepository?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initialize()
+    }
+    
+    private func initialize() {
         mapView.delegate = self
         mapView.showAnnotations(mapView.annotations, animated: true)
         generateRandomPokemons()
+        initPokemonRepository()
+    }
+    
+    private func initPokemonRepository() {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            let context = appDelegate.persistentContainer.viewContext
+            pokemonRepository = PokemonRepository(viewContext: context)
+            //guard let teste = pokemonRepository else { return }
+            //teste.populateDatabase()
+        }
     }
     
     private func generateRandomPokemons() {

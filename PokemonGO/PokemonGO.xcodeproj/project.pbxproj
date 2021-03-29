@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D426344D261110570053EBFF /* PokemonRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D426344C261110570053EBFF /* PokemonRepository.swift */; };
+		D426345D261113520053EBFF /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D426345C261113520053EBFF /* Pokemon.swift */; };
 		D475EE552606D8B70021D672 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D475EE542606D8B70021D672 /* AppDelegate.swift */; };
 		D475EE572606D8B70021D672 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D475EE562606D8B70021D672 /* SceneDelegate.swift */; };
 		D475EE592606D8B70021D672 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D475EE582606D8B70021D672 /* ViewController.swift */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D426344C261110570053EBFF /* PokemonRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonRepository.swift; sourceTree = "<group>"; };
+		D426345C261113520053EBFF /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
 		D475EE512606D8B70021D672 /* PokemonGO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokemonGO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D475EE542606D8B70021D672 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D475EE562606D8B70021D672 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -44,6 +48,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D426344F261110640053EBFF /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				D475EE582606D8B70021D672 /* ViewController.swift */,
+				D4F643F7260D59170095B0ED /* MapLocationViewController.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		D4263451261110880053EBFF /* repository */ = {
+			isa = PBXGroup;
+			children = (
+				D426344C261110570053EBFF /* PokemonRepository.swift */,
+			);
+			path = repository;
+			sourceTree = "<group>";
+		};
+		D42634522611109A0053EBFF /* model */ = {
+			isa = PBXGroup;
+			children = (
+				D426345C261113520053EBFF /* Pokemon.swift */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
 		D475EE482606D8B70021D672 = {
 			isa = PBXGroup;
 			children = (
@@ -64,15 +93,16 @@
 		D475EE532606D8B70021D672 /* PokemonGO */ = {
 			isa = PBXGroup;
 			children = (
+				D42634522611109A0053EBFF /* model */,
+				D4263451261110880053EBFF /* repository */,
+				D426344F261110640053EBFF /* controller */,
 				D475EE542606D8B70021D672 /* AppDelegate.swift */,
 				D475EE562606D8B70021D672 /* SceneDelegate.swift */,
-				D475EE582606D8B70021D672 /* ViewController.swift */,
 				D475EE5A2606D8B70021D672 /* Main.storyboard */,
 				D475EE602606D8B90021D672 /* Assets.xcassets */,
 				D475EE622606D8B90021D672 /* LaunchScreen.storyboard */,
 				D475EE652606D8B90021D672 /* Info.plist */,
 				D475EE5D2606D8B70021D672 /* PokemonGO.xcdatamodeld */,
-				D4F643F7260D59170095B0ED /* MapLocationViewController.swift */,
 			);
 			path = PokemonGO;
 			sourceTree = "<group>";
@@ -155,11 +185,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D426345D261113520053EBFF /* Pokemon.swift in Sources */,
 				D475EE592606D8B70021D672 /* ViewController.swift in Sources */,
 				D4F643F8260D59170095B0ED /* MapLocationViewController.swift in Sources */,
 				D475EE5F2606D8B70021D672 /* PokemonGO.xcdatamodeld in Sources */,
 				D475EE552606D8B70021D672 /* AppDelegate.swift in Sources */,
 				D475EE572606D8B70021D672 /* SceneDelegate.swift in Sources */,
+				D426344D261110570053EBFF /* PokemonRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
