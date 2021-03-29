@@ -77,18 +77,23 @@ class ViewController: MapLocationViewController {
         var frame = annotationView.frame
         frame.size.height = 40
         frame.size.width = 40
-        if annotation is MKUserLocation {
-            annotationView.image = UIImage(named: "player")
-        } else if annotation is PokemonPointAnnotation{
-            guard
-                let pokemonAnnotion = annotation as? PokemonPointAnnotation
-            else {
-                return annotationView
-            }
-            annotationView.image = UIImage(named: pokemonAnnotion.pokemon.imageName)
-        }
+        annotationView.image = createImageByAnnotationType(annotation: annotation)
         annotationView.frame = frame
         return annotationView
+    }
+    
+    private func createImageByAnnotationType(annotation: MKAnnotation) -> UIImage? {
+        if annotation is MKUserLocation {
+            return UIImage(named: "player")
+        } else if annotation is PokemonPointAnnotation {
+            guard
+                let pokemonAnnotation = annotation as? PokemonPointAnnotation
+            else {
+                return nil
+            }
+            return UIImage(named: pokemonAnnotation.pokemon.imageName)
+        }
+        return nil
     }
     
     func locationManager(
