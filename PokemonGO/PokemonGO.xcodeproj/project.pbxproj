@@ -18,6 +18,7 @@
 		D475EE642606D8B90021D672 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D475EE622606D8B90021D672 /* LaunchScreen.storyboard */; };
 		D475EE6E2606DAB80021D672 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D475EE6D2606DAB80021D672 /* MapKit.framework */; };
 		D4EA5DD326115F7B00CE6A76 /* PokemonPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5DD226115F7B00CE6A76 /* PokemonPointAnnotation.swift */; };
+		D4EA5DD726116D8B00CE6A76 /* PokeListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5DD626116D8B00CE6A76 /* PokeListTableViewController.swift */; };
 		D4F643F8260D59170095B0ED /* MapLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F643F7260D59170095B0ED /* MapLocationViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		D475EE652606D8B90021D672 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D475EE6D2606DAB80021D672 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D4EA5DD226115F7B00CE6A76 /* PokemonPointAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonPointAnnotation.swift; sourceTree = "<group>"; };
+		D4EA5DD626116D8B00CE6A76 /* PokeListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeListTableViewController.swift; sourceTree = "<group>"; };
 		D4F643F7260D59170095B0ED /* MapLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLocationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -55,6 +57,7 @@
 			children = (
 				D475EE582606D8B70021D672 /* ViewController.swift */,
 				D4F643F7260D59170095B0ED /* MapLocationViewController.swift */,
+				D4EA5DD626116D8B00CE6A76 /* PokeListTableViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 				D475EE552606D8B70021D672 /* AppDelegate.swift in Sources */,
 				D475EE572606D8B70021D672 /* SceneDelegate.swift in Sources */,
 				D4EA5DD326115F7B00CE6A76 /* PokemonPointAnnotation.swift in Sources */,
+				D4EA5DD726116D8B00CE6A76 /* PokeListTableViewController.swift in Sources */,
 				D426344D261110570053EBFF /* PokemonRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

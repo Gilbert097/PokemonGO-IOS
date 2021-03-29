@@ -22,7 +22,7 @@ class ViewController: MapLocationViewController {
     private func initialize() {
         mapView.delegate = self
         mapView.showAnnotations(mapView.annotations, animated: true)
-        generateRandomPokemons()
+        generateRandomPokemonPointAnnotations()
         initPokemonRepository()
         findPokemons()
     }
@@ -40,7 +40,7 @@ class ViewController: MapLocationViewController {
         }
     }
     
-    private func generateRandomPokemons() {
+    private func generateRandomPokemonPointAnnotations() {
         Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { (timer) in
             guard
                 let coordinate = self.locationManager.location?.coordinate
