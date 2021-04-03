@@ -31,7 +31,7 @@ class ViewController: MapLocationViewController {
     }
     
     private func generateRandomPokemonPointAnnotations() {
-        Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] (timer) in
+        Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] (timer) in
             guard
                 let self = self,
                 let coordinate = self.locationManager.location?.coordinate
