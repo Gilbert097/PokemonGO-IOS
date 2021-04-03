@@ -104,6 +104,40 @@ public class PokemonRepository {
         return []
     }
     
+    private func getEntityById(id: String) -> PokemonEntity? {
+        do {
+            let request = PokemonEntity.fetchRequest() as NSFetchRequest<PokemonEntity>
+            request.predicate = NSPredicate(format: "id = %@", argumentArray: [id])
+            
+            guard let viewContext = self.viewContext else { return nil }
+            let pokemonEntitys = try viewContext.fetch(request)
+
+            return pokemonEntitys.first
+        }catch {
+            print("Error: \(error.localizedDescription)")
+        }
+        return nil
+    }
+    
+    public func capture(pokemon: Pokemon) -> Bool {
+        
+        do {
+            guard
+                let pokemonEntity = self.getEntityById(id: pokemon.id),
+                let viewContext = self.viewContext
+            else {
+                return false
+            }
+            pokemonEntity.captured = true
+            try viewContext.save()
+            return true
+        } catch {
+            print("Error: \(error.localizedDescription)")
+        }
+        
+        return false
+    }
+    
     public func populateDatabase() {
         
         var pokemons:[Pokemon] = []

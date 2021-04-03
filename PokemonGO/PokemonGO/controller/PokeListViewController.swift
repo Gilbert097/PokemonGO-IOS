@@ -27,7 +27,7 @@ class PokeListViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return pokemonsCaptured.count
-        }else {
+        } else {
             return pokemonsNotCaptured.count
         }
     }

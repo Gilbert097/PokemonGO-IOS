@@ -72,6 +72,36 @@ class ViewController: MapLocationViewController {
         return annotationView
     }
     
+    func mapView(
+        _ mapView: MKMapView,
+        didSelect view: MKAnnotationView
+    ) {
+        let annotation = view.annotation
+        mapView.deselectAnnotation(annotation, animated: true)
+        
+        guard
+            let pokemonPointAnnotation = annotation as? PokemonPointAnnotation
+        else { return }
+        
+        let pokemon = pokemonPointAnnotation.pokemon
+        let isSuccess = pokemonRepository.capture(pokemon: pokemon)
+        
+        var titleAlert = "Error"
+        var messageAlert = "Ocorreu um erro ao capturar o pokemon, tente novamente!"
+        if isSuccess {
+            titleAlert = "Parabéns!"
+            messageAlert = "Você capturou um \(pokemon.name)"
+        }
+        
+        let alertController = UIAlertController(title: titleAlert,
+                                                message: messageAlert,
+                                                preferredStyle: .alert)
+        let actionOK = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alertController.addAction(actionOK)
+        present(alertController, animated: true, completion: nil)
+    
+    }
+    
     private func createImageByAnnotationType(annotation: MKAnnotation) -> UIImage? {
         if annotation is MKUserLocation {
             return UIImage(named: "player")
