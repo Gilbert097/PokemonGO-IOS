@@ -9,10 +9,17 @@ import UIKit
 
 class PokeListTableViewController: UIViewController {
     
-    public var pokemons: [Pokemon] = []
+    private let pokemonRepository = PokemonRepository()
+    private var pokemonsCaptured: [Pokemon] = []
+    private var pokemonsNotCaptured: [Pokemon] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.pokemonsCaptured = pokemonRepository.getByCaptured(isCaptured: true)
+        print("pokemonsCaptured \(pokemonsCaptured.count)")
+        self.pokemonsNotCaptured = pokemonRepository.getByCaptured(isCaptured: false)
+        print("pokemonsNotCaptured \(pokemonsNotCaptured.count)")
     }
 
     @IBAction func mapButtonClick(_ sender: UIButton) {

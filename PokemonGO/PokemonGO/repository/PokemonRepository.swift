@@ -7,22 +7,24 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 public class PokemonRepository {
     
-    private let viewContext: NSManagedObjectContext
+    private var viewContext: NSManagedObjectContext? = nil
     
-    public init(
-        viewContext: NSManagedObjectContext
-    ) {
-        self.viewContext = viewContext
+    public init() {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            self.viewContext = appDelegate.persistentContainer.viewContext
+        }
     }
     
     public func save(pokemon: Pokemon) -> Bool {
         do {
             addPokemonEntity(pokemon)
             
-            try self.viewContext.save()
+            guard let viewContext = self.viewContext else { return false }
+            try viewContext.save()
             print("Pokemon salvo com sucesso!")
             return true
         } catch {
@@ -32,7 +34,8 @@ public class PokemonRepository {
     }
     
     private func addPokemonEntity(_ pokemon: Pokemon) {
-        let pokemonEntity = PokemonEntity(context: self.viewContext)
+        guard let viewContext = self.viewContext else { return }
+        let pokemonEntity = PokemonEntity(context: viewContext)
         pokemonEntity.id = pokemon.id
         pokemonEntity.name = pokemon.name
         pokemonEntity.captured = pokemon.captured
@@ -42,7 +45,8 @@ public class PokemonRepository {
     public func saveAll(pokemons: [Pokemon]) -> Bool {
         do {
             pokemons.forEach { addPokemonEntity($0)}
-            try self.viewContext.save()
+            guard let viewContext = self.viewContext else { return false }
+            try viewContext.save()
             print("Pokemons salvos com sucesso!")
             return true
         } catch {
@@ -53,7 +57,8 @@ public class PokemonRepository {
     
     public func getAll() -> [Pokemon] {
         do {
-            let pokemonEntitys = try self.viewContext.fetch (PokemonEntity.fetchRequest()) as? [PokemonEntity]
+            guard let viewContext = self.viewContext else { return [] }
+            let pokemonEntitys = try viewContext.fetch (PokemonEntity.fetchRequest()) as? [PokemonEntity]
             
             guard
                 let entitys = pokemonEntitys,
@@ -64,6 +69,28 @@ public class PokemonRepository {
             }
             
             return entitys.map{
+                Pokemon(
+                    id: $0.id,
+                    name: $0.name ?? "",
+                    imageName: $0.image_name ?? "",
+                    captured: $0.captured
+                )
+            }
+        }catch {
+            print("Error: \(error.localizedDescription)")
+        }
+        return []
+    }
+    
+    public func getByCaptured(isCaptured: Bool) -> [Pokemon] {
+        do {
+            let request = PokemonEntity.fetchRequest() as NSFetchRequest<PokemonEntity>
+            request.predicate = NSPredicate(format: "captured = %@", argumentArray: [isCaptured])
+            
+            guard let viewContext = self.viewContext else { return [] }
+            let pokemonEntitys = try viewContext.fetch(request)
+        
+            return pokemonEntitys.map{
                 Pokemon(
                     id: $0.id,
                     name: $0.name ?? "",

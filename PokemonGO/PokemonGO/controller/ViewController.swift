@@ -11,7 +11,7 @@ import MapKit
 class ViewController: MapLocationViewController {
     
     @IBOutlet weak var mapView: MKMapView!
-    private var pokemonRepository: PokemonRepository?
+    private let pokemonRepository: PokemonRepository = PokemonRepository()
     private var pokemons: [Pokemon] = []
     
     override func viewDidLoad() {
@@ -23,21 +23,11 @@ class ViewController: MapLocationViewController {
         mapView.delegate = self
         mapView.showAnnotations(mapView.annotations, animated: true)
         generateRandomPokemonPointAnnotations()
-        initPokemonRepository()
         findPokemons()
     }
     
     private func findPokemons() {
-        if let repository = pokemonRepository {
-            pokemons = repository.getAll()
-        }
-    }
-    
-    private func initPokemonRepository() {
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            let context = appDelegate.persistentContainer.viewContext
-            pokemonRepository = PokemonRepository(viewContext: context)
-        }
+        pokemons = pokemonRepository.getAll()
     }
     
     private func generateRandomPokemonPointAnnotations() {
@@ -72,7 +62,7 @@ class ViewController: MapLocationViewController {
         _ mapView: MKMapView,
         viewFor annotation: MKAnnotation
     ) -> MKAnnotationView? {
-       
+        
         let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: nil)
         var frame = annotationView.frame
         frame.size.height = 40
