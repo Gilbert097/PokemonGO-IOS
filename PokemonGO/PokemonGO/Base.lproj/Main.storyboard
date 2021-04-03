@@ -64,10 +64,10 @@
             </objects>
             <point key="canvasLocation" x="141" y="129"/>
         </scene>
-        <!--Poke List Table View Controller-->
+        <!--Poke List View Controller-->
         <scene sceneID="fLc-jf-xlc">
             <objects>
-                <viewController id="8SE-tX-EfD" customClass="PokeListTableViewController" customModule="PokemonGO" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="8SE-tX-EfD" customClass="PokeListViewController" customModule="PokemonGO" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Lc9-kB-0hY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -76,7 +76,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="z1c-Ja-rdc">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="pokemonCell" id="z1c-Ja-rdc">
                                         <rect key="frame" x="0.0" y="28" width="414" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="z1c-Ja-rdc" id="xZr-TM-7IO">
@@ -85,6 +85,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="8SE-tX-EfD" id="auO-HD-0Sq"/>
+                                    <outlet property="delegate" destination="8SE-tX-EfD" id="6p6-r3-lSw"/>
+                                </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tcg-KW-BRm">
                                 <rect key="frame" x="182" y="656" width="50" height="50"/>
