@@ -99,6 +99,10 @@ class ViewController: MapLocationViewController {
                 let pokemon = pokemonPointAnnotation.pokemon
                 let isSuccess = self.pokemonRepository.capture(pokemon: pokemon)
                 
+                if isSuccess {
+                    self.mapView.removeAnnotation(pokemonPointAnnotation)
+                }
+                
                 self.showMessageCapturePokemonByStatus(
                     isSuccess: isSuccess,
                     pokemon: pokemon
