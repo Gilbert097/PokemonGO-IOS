@@ -31,8 +31,9 @@ class ViewController: MapLocationViewController {
     }
     
     private func generateRandomPokemonPointAnnotations() {
-        Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { (timer) in
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] (timer) in
             guard
+                let self = self,
                 let coordinate = self.locationManager.location?.coordinate
             else { return }
             let pokemon = self.getRandomPokemon()
@@ -76,30 +77,71 @@ class ViewController: MapLocationViewController {
         _ mapView: MKMapView,
         didSelect view: MKAnnotationView
     ) {
-        let annotation = view.annotation
-        mapView.deselectAnnotation(annotation, animated: true)
-        
         guard
+            let annotation = view.annotation,
             let pokemonPointAnnotation = annotation as? PokemonPointAnnotation
         else { return }
         
-        let pokemon = pokemonPointAnnotation.pokemon
-        let isSuccess = pokemonRepository.capture(pokemon: pokemon)
-        
-        var titleAlert = "Error"
-        var messageAlert = "Ocorreu um erro ao capturar o pokemon, tente novamente!"
-        if isSuccess {
-            titleAlert = "Parabéns!"
-            messageAlert = "Você capturou um \(pokemon.name)"
+        mapView.deselectAnnotation(annotation, animated: true)
+        applyZoomRegion(coordinate: annotation.coordinate)
+        executeScheduledPokemonCapture(pokemonPointAnnotation: pokemonPointAnnotation)
+    }
+    
+    private func executeScheduledPokemonCapture(pokemonPointAnnotation: PokemonPointAnnotation) {
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { [weak self] (timer) in
+            guard
+                let self = self,
+                let coordinateUser = self.locationManager.location?.coordinate
+            else { return }
+            
+            let inside = self.isUserCloseToPokemon(coordinateUser: coordinateUser)
+            if inside {
+                let pokemon = pokemonPointAnnotation.pokemon
+                let isSuccess = self.pokemonRepository.capture(pokemon: pokemon)
+                
+                self.showMessageCapturePokemonByStatus(
+                    isSuccess: isSuccess,
+                    pokemon: pokemon
+                )
+            } else {
+                self.showSimpleMessage(
+                    title: "Pokemon Longe",
+                    message: "Ops, você não pode capturar este pokemon"
+                )
+            }
         }
-        
-        let alertController = UIAlertController(title: titleAlert,
-                                                message: messageAlert,
+    }
+    
+    private func showMessageCapturePokemonByStatus(
+        isSuccess: Bool,
+        pokemon: Pokemon
+    ) {
+        if isSuccess {
+            self.showSimpleMessage(
+                title:"Parabéns!",
+                message: "Você capturou um \(pokemon.name)"
+            )
+        } else {
+            self.showSimpleMessage(
+                title:"Error",
+                message: "Ocorreu um erro ao capturar o pokemon, tente novamente!"
+            )
+        }
+    }
+    
+    private func isUserCloseToPokemon(coordinateUser: CLLocationCoordinate2D) -> Bool {
+        let userPoint: MKMapPoint = MKMapPoint(coordinateUser);
+        let mapRect: MKMapRect = mapView.visibleMapRect;
+        return mapRect.contains(userPoint);
+    }
+    
+    private func showSimpleMessage(title: String, message: String) {
+        let alertController = UIAlertController(title: title,
+                                                message: message,
                                                 preferredStyle: .alert)
         let actionOK = UIAlertAction(title: "Ok", style: .default, handler: nil)
         alertController.addAction(actionOK)
         present(alertController, animated: true, completion: nil)
-    
     }
     
     private func createImageByAnnotationType(annotation: MKAnnotation) -> UIImage? {
