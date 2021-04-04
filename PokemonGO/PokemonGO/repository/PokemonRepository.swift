@@ -38,7 +38,7 @@ public class PokemonRepository {
         let pokemonEntity = PokemonEntity(context: viewContext)
         pokemonEntity.id = pokemon.id
         pokemonEntity.name = pokemon.name
-        pokemonEntity.captured = pokemon.captured
+        pokemonEntity.captured_quantity = pokemon.capturedQuantity
         pokemonEntity.image_name = pokemon.imageName
     }
     
@@ -73,7 +73,7 @@ public class PokemonRepository {
                     id: $0.id,
                     name: $0.name ?? "",
                     imageName: $0.image_name ?? "",
-                    captured: $0.captured
+                    capturedQuantity: $0.captured_quantity
                 )
             }
         }catch {
@@ -85,7 +85,11 @@ public class PokemonRepository {
     public func getByCaptured(isCaptured: Bool) -> [Pokemon] {
         do {
             let request = PokemonEntity.fetchRequest() as NSFetchRequest<PokemonEntity>
-            request.predicate = NSPredicate(format: "captured = %@", argumentArray: [isCaptured])
+            if isCaptured {
+                request.predicate = NSPredicate(format: "captured_quantity > 0")
+            }else {
+                request.predicate = NSPredicate(format: "captured_quantity = 0")
+            }
             
             guard let viewContext = self.viewContext else { return [] }
             let pokemonEntitys = try viewContext.fetch(request)
@@ -95,7 +99,7 @@ public class PokemonRepository {
                     id: $0.id,
                     name: $0.name ?? "",
                     imageName: $0.image_name ?? "",
-                    captured: $0.captured
+                    capturedQuantity: $0.captured_quantity
                 )
             }
         }catch {
@@ -128,7 +132,7 @@ public class PokemonRepository {
             else {
                 return false
             }
-            pokemonEntity.captured = true
+            pokemonEntity.captured_quantity = pokemonEntity.captured_quantity + 1
             try viewContext.save()
             return true
         } catch {
@@ -141,18 +145,18 @@ public class PokemonRepository {
     public func populateDatabase() {
         
         var pokemons:[Pokemon] = []
-        pokemons.append(Pokemon(name: "Mew", imageName: "mew", captured: false))
-        pokemons.append(Pokemon(name: "Meowth", imageName: "meowth", captured: false))
-        pokemons.append(Pokemon(name: "Pikachu", imageName: "pikachu-2", captured: true))
-        pokemons.append(Pokemon(name: "Squirtle", imageName: "squirtle", captured: false))
-        pokemons.append(Pokemon(name: "Charmander", imageName: "charmander", captured: false))
-        pokemons.append(Pokemon(name: "Caterpie", imageName: "caterpie", captured: false))
-        pokemons.append(Pokemon(name: "Bullbasaur", imageName: "bullbasaur", captured: false))
-        pokemons.append(Pokemon(name: "Bellsprout", imageName: "bellsprout", captured: false))
-        pokemons.append(Pokemon(name: "Psyduck", imageName: "psyduck", captured: false))
-        pokemons.append(Pokemon(name: "Rattata", imageName: "rattata", captured: false))
-        pokemons.append(Pokemon(name: "Snorlax", imageName: "snorlax", captured: false))
-        pokemons.append(Pokemon(name: "Zubat", imageName: "zubat", captured: false))
+        pokemons.append(Pokemon(name: "Mew", imageName: "mew", capturedQuantity: 0))
+        pokemons.append(Pokemon(name: "Meowth", imageName: "meowth", capturedQuantity: 0))
+        pokemons.append(Pokemon(name: "Pikachu", imageName: "pikachu-2", capturedQuantity: 1))
+        pokemons.append(Pokemon(name: "Squirtle", imageName: "squirtle", capturedQuantity: 0))
+        pokemons.append(Pokemon(name: "Charmander", imageName: "charmander", capturedQuantity: 0))
+        pokemons.append(Pokemon(name: "Caterpie", imageName: "caterpie", capturedQuantity: 0))
+        pokemons.append(Pokemon(name: "Bullbasaur", imageName: "bullbasaur", capturedQuantity: 0))
+        pokemons.append(Pokemon(name: "Bellsprout", imageName: "bellsprout", capturedQuantity: 0))
+        pokemons.append(Pokemon(name: "Psyduck", imageName: "psyduck", capturedQuantity: 0))
+        pokemons.append(Pokemon(name: "Rattata", imageName: "rattata", capturedQuantity: 0))
+        pokemons.append(Pokemon(name: "Snorlax", imageName: "snorlax", capturedQuantity: 0))
+        pokemons.append(Pokemon(name: "Zubat", imageName: "zubat", capturedQuantity: 0))
         
         _ = self.saveAll(pokemons: pokemons)
     }

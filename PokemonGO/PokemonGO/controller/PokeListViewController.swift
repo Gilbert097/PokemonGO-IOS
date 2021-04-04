@@ -41,10 +41,15 @@ class PokeListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "pokemonCell")
+        guard
+            let cell = tableView.dequeueReusableCell(withIdentifier: "pokemonCell", for: indexPath) as? PokemonTableViewCell
+        else {
+            return PokemonTableViewCell(style: .default, reuseIdentifier: "pokemonCell")
+        }
         let pokemon = getCurrentPokemonBySection(indexPath: indexPath)
-        cell.imageView?.image = UIImage(named: pokemon.imageName)
-        cell.textLabel?.text = pokemon.name
+        cell.pokemonImageView?.image = UIImage(named: pokemon.imageName)
+        cell.namePokemonLabel?.text = pokemon.name
+        cell.quantityPokemonLabel?.text = String(pokemon.capturedQuantity)
         return cell
     }
     

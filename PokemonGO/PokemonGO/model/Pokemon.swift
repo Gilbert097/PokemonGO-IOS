@@ -11,17 +11,17 @@ public struct Pokemon {
     let id: String
     let name: String
     let imageName: String
-    let captured: Bool
+    let capturedQuantity: Int64
     
     public init(
         id: String? = nil,
         name: String,
         imageName: String,
-        captured: Bool
+        capturedQuantity: Int64
     ) {
         self.id = id ?? UUID().uuidString
         self.name = name
         self.imageName = imageName
-        self.captured = captured
+        self.capturedQuantity = capturedQuantity
     }
 }
