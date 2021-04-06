@@ -1,5 +1,5 @@
 # PokemonGO-IOS
-Décimo quarto app IOS do curso Desenvolvimento IOS 12 na Udemy, ministrado pelo professor Jamilton Damasceno. O objetivo do app é ser uma versão simples do jogo Pokémon GO.
+14º app IOS do curso Desenvolvimento IOS 12 na Udemy, ministrado pelo professor Jamilton Damasceno. O objetivo do app é ser uma versão simples do jogo Pokémon GO.
 
 No desenvolvimento desse app foi possível práticar:
 - Manipular o banco de dados utilizando o framework CoreData.
